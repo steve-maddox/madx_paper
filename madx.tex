@@ -1,0 +1,92 @@
+
+\section{Source extraction}
+\label{extract}
+
+The ultimate aim for the source identification of the H-ATLAS data is
+to use a multiband method to perform extraction across the five
+wavebands simultaneously, thus utilising all the available data as
+well as easily obtaining complete flux density information for each
+detected galaxy, without having to match catalogues between
+bands. However, the short timescale for the reduction of these SDP
+observations, combined with the higher than expected PACS noise
+levels, means that this was only possible for the three SPIRE
+bands. As a result, the source extraction for the PACS and SPIRE maps
+is discussed separately in this Section.
+
+The full H-ATLAS SDP catalogue described here will be available at
+\verb1http://www.h-atlas.org/1.
+
+\subsection{The SPIRE catalogue}
+\label{spire_cat}
+
+Sources are identified in the SPIRE 250, 350 and 500\mic maps using
+the Multi--band Algorithm for source eXtraction \citep[MADX][]{madx},
+which is being developed for the H--ATLAS survey. The first step in
+this method is to subtract a local background, estimated from the peak
+of the histogram of pixel values in $30\times 30$ pixel blocks. This
+corresponds to 2.5\arcmin $\times$ 2.5\arcmin for the 250\mic map, and
+5\arcmin $\times$ 5\arcmin for the 350 and 500\mic maps. The
+background (in mJy/beam) at each pixel was then estimated using a
+bi-cubic interpolation between the coarse grid of backgrounds, and
+subtracted from the data. Figure \ref{pre_backsub} illustrates the
+reduction in backgound contamination (mainly arising from galactic
+cirrus) obtained using this method.
+
+The background subtracted maps were then filtered by the estimated
+PSF, including an inverse variance weighting, where the noise for each
+map pixel was estimated from the noise map (matched filtering).  The
+maps from 350 and 500\mic bands are interpolated onto the 250\mic
+pixels. Then all three maps are combined with weights set by the local
+inverse variance, and also the prior expectation of the spectral
+energy distribution (SED) of the galaxies. Each pixel in the resulting
+combined map gives the log likelihood that there is a source with the
+given SED at that pixel, so finding peaks in the combined map gives
+the most likely positions of sources in the map. We tried a
+flat-spectrum prior, where equal weight is given to each band, and
+also 250\mic weighting, where only the 250\mic band was included. At
+the depth of the filtered maps source confusion is a significant
+problem, and the higher resolution of the 250\mic maps outweighed the
+signal--to--noise gain from including the other bands (see Section
+\ref{sim_creation} and Figure \ref{pos_err_pss_prior}). For our
+current data we chose to use the 250$\mu $m only prior for all our
+catalogues, which means that sources are identified at 250\mic
+only. This may introduce a bias in the catalogue against red,
+potentially high--redshift, sources that are bright at 500\mic, but
+weak in the other bands. However, comparing catalogues made with both
+priors showed that the number of missed sources is low: 2974
+$>5\sigma$ 350\mic sources and 348 $>5\sigma$ 500\mic sources are
+detected with the flat prior, compared with 2758 and 307 sources
+detected using the 250\mic prior. We aim to revisit this issue in
+future data--releases.
+
+Local, $>2.5\sigma$, peaks are identified in the combined PSF filtered
+map as potential sources, and sorted in order of decreasing
+significance level. A Gaussian is fitted to each peak to provide an
+estimate of the position at the sub--pixel level, as well as an
+estimate of the peak value, which gives the best flux estimate for a
+point source, though this can be influenced by the presence of a
+neighbouring source, as illustrated in Figure \ref{cutout_plots}. The
+scaled PSF is then subtracted from the map before going on to the next
+source in the sequence.  The fluxes in other bands were estimated by
+using a bi--cubic interpolation to the position given by the combined
+map. Again a scaled PSF is subtracted from the map before estimating
+the flux of the next source. This sorting and PSF subtraction reduces
+the effect of confusion, but in future releases we plan to implement
+multi-source fitting to blended sources.
+
+To produce a catalogue of reliable sources, a source is only included
+if it is detected at a significance of at least 5$\sigma$ in one of
+the SPIRE bands. The total number of sources in the SPIRE catalogue is
+6876.
+
+In calculating the $\sigma$ for each source, we use the filtered noise
+map and add the confusion noise to this in quadrature. The average
+1$\sigma$ instrumental noise values are 4, 4 and 5.7 mJy/beam
+respectively in the 250, 350 and 500\mic bands, determined from the
+filtered maps. We estimated the confusion noise from the difference
+between the variance of the maps and the expected variance due to
+instrumental noise, and find that the 1$\sigma$ confusion noise is 5,
+6 and 7 mJy/beam at 250, 350 and 500\mic; these values are in good
+agreement with those found by \citet{nguyen} using data from the
+Herschel Multi--tiered Extragalactic Survey (HerMES). The resulting
+average 5$\sigma$ limits are therefore 33, 36 and 45 mJy/beam.
